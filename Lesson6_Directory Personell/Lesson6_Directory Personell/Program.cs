@@ -11,16 +11,18 @@ namespace Lesson6_Directory_Personell
     {  
          static void DataInput (string pred)
             {
-        
+            int ID = 0;
+
+            if (File.Exists(pred))
+                ID = File.ReadAllLines(pred).Length + 1;
+
             using (StreamWriter sw = new StreamWriter(pred,true,Encoding.Unicode))
             {
                
 
                 string Data = string.Empty;
-
-
-                Console.Write("\n ID: ");
-                int ID = Convert.ToInt32(Console.ReadLine());
+                
+         
                 Data += $"#{ID}";
 
                 string Date = DateTime.Now.ToString();
