@@ -9,18 +9,19 @@ namespace Lesson6_Directory_Personell
 {
     internal class Program
     {  
-         static void DataInput ()
+         static void DataInput (string pred)
             {
         
-            using (StreamWriter sw = new StreamWriter("Derectory_Personell.txt",true,Encoding.Unicode))
+            using (StreamWriter sw = new StreamWriter(pred,true,Encoding.Unicode))
             {
                
 
                 string Data = string.Empty;
-                string guid = Guid.NewGuid().ToString().Replace("=","");
-                string id = guid.Substring(0, 4) + "-" + guid.Substring(4, 4) + "-" + guid.Substring(9, 4) + "-" + guid.Substring(14, 4);
-                Console.Write($"\nID:{id}");
-                Data += $"{id}";
+
+
+                Console.Write("\n ID: ");
+                int ID = Convert.ToInt32(Console.ReadLine());
+                Data += $"#{ID}";
 
                 string Date = DateTime.Now.ToString();
                 Console.WriteLine($"\nДата и время:{Date}");
@@ -50,25 +51,29 @@ namespace Lesson6_Directory_Personell
          
 
              }
-        static void  OutputConsole ()
+        static void  OutputConsole (string str)
         {
-            using (StreamReader sr = new StreamReader("Derectory_Personell.txt", Encoding.Unicode))
+            if (!File.Exists(str))
+                Console.WriteLine("Данных в файле нет");
+            else
             {
-                while (!sr.EndOfStream)
-                         Console.WriteLine(sr.ReadLine().Replace("#"," "));
-
-               }
-
+                using (StreamReader sr = new StreamReader(str, Encoding.Unicode))
+                {                  
+                    while (!sr.EndOfStream)
+                        Console.WriteLine(sr.ReadLine().Replace("#", " "));
+                }
+            }
 
         }
         static void Main(string[] args)
         {
             Console.WriteLine("Введите 1 или 2 для работа в справочнике. \n 1- ввывести данные на экран.\n 2-Добавить новую запись");
             string WorkBase = Console.ReadLine();
+            string File = @"Derectory_Personell.txt";
             switch (WorkBase)
             {
-                case "1": OutputConsole();break;
-                case "2": DataInput();break;
+                case "1": OutputConsole(File);break;
+                case "2": DataInput(File);break;
                     default:Console.Write("Вы ввели не существующую команду");break;
              }
             Console.ReadKey();
